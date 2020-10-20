@@ -48,6 +48,7 @@ Com as devidas validações feitas pelo backend.
 
 Principais ferramentas utilizadas na construção do Mobile:
 
+- React Native
 - Axios
 - Redux
 - Styled Components
