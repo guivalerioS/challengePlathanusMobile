@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Snackbar from 'react-native-snackbar';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import PhoneInput from "react-native-phone-number-input";
-
 import { signInRequest } from '~/store/modules/auth/actions';
+import api from '~/services/api';
 
 import {
   Container,
@@ -11,19 +12,18 @@ import {
   Form,
   FormInput,
   SubmitButton,
-  ForgotPassButton,
   Title,
   TitleInto,
+  SubTitle,
   TitleAccount,
 } from './styles';
 
 
-
-export default function SignIn({ navigation }) {
+export default function PhoneNumberForgotScreen({ navigation }) {
   const dispatch = useDispatch();
   const passwordRef = useRef();
 
-  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -35,16 +35,39 @@ export default function SignIn({ navigation }) {
 
   const loading = useSelector(state => state.auth.loading);
 
-  function handleSubmit() {
-    dispatch(signInRequest(formattedValue, password));
+  async function handleSendSms() {
+
+    try {
+      
+      setIsLoading(true)
+      const response =  await api.post('sendSms', {
+        telephone_number: formattedValue.replace(" ", "").trim(),
+      }).then(response => {
+        setIsLoading(false)
+      });
+        //console.log(response);
+      navigation.navigate('SmsVerificationForgotScreen', {
+        formattedValue,
+      })
+    }catch (error) {
+      setIsLoading(false)
+      //console.log(error);
+      Snackbar.show({
+        text: 'Make sure that the phone number was entered correctly.',
+        duration: Snackbar.LENGTH_LONG,
+      });
+      } 
+
   }
 
   return (
 
     <>
 <ContainerTitle>
-    <Title> Welcome  </Title>
-<Title> to Cash Opera </Title>
+    <Title>Enter Your  </Title>
+<Title>phone number </Title>
+
+<SubTitle>First we will send you a PIN code to verify your phone number.</SubTitle>
 </ContainerTitle>
       <Container>
 
@@ -54,50 +77,28 @@ export default function SignIn({ navigation }) {
         <PhoneInput
             defaultValue={value}
             defaultCode="US"
-            containerStyle={{ paddingLeft: 15 ,paddingRight: 15 ,width: '100%', height: 50, borderRadius: 10,backgroundColor: '#f4f4f4'  }}
+            containerStyle={{ marginBottom: '10%' , paddingLeft: 15 ,paddingRight: 15 ,width: '100%', height: 50, borderRadius: 10,backgroundColor: '#f4f4f4'  }}
             textContainerStyle={{ paddingLeft: 15 ,paddingRight: 15 ,width: '100%', height: 50, borderRadius: 10,backgroundColor: '#f4f4f4'  }}
             textInputStyle= {{ height : 60}}
             onChangeText={(text) => {
               setValue(text);
             }}
             onChangeFormattedText={(text) => {
+
               setFormattedValue(text);
+
             }}
             autoFocus
           />
 
 
-   <TitleInto> Password  </TitleInto>
-          <FormInput
-            icon="lock-outline"
-            passwordField
-            placeholder="Password"
-            ref={passwordRef}
-            returnKeyType="send"
-            onSubmitEditing={handleSubmit}
-            value={password}
-            onChangeText={setPassword}
-          />
-
-          <SubmitButton loading={loading} onPress={handleSubmit}>
-            Sign in
+<SubmitButton loading={isLoading} onPress={() => handleSendSms()}>
+            Next
           </SubmitButton>
-
-
-
 
 
         </Form>
 
-        <ForgotPassButton loading={loading} onPress={() => navigation.navigate('ForgotPasswordFlow')}>
-            Forgot your password?
-          </ForgotPassButton>
-
-          <TitleAccount> Don't have an account yet? </TitleAccount>
-
-          <SubmitButton loading={loading} onPress={() => navigation.navigate('SignUpFlow')}>
-            Sign up for free
-          </SubmitButton>
       </Container>
       </>
 

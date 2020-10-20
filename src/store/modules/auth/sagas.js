@@ -29,7 +29,7 @@ export function* signIn({ payload }) {
 
 export function* signUp({ payload, navigation }) {
   try {
-    const { name, email, password, telephone_number } = payload;
+    const { name, email, password, telephone_number } = payload.data;
 
     yield call(api.post, 'users', {
       name,
@@ -42,8 +42,10 @@ export function* signUp({ payload, navigation }) {
     navigation.navigate('SignIn');
   } catch (err) {
     console.log(err.response.data);
-    if (err.response.data.error === 'User already exists.') {
-      Alert.alert('Registration failed', 'Telephone or email already used');
+    if (err.response.data.error === 'User email already exists.') {
+      Alert.alert('Registration failed', 'User email already exists.');
+    }else if (err.response.data.error === 'User telephone already exists.') {
+      Alert.alert('Registration failed', 'User telephone already exists.');
     } else if (err.response.data.error === 'Validation fails') {
       Alert.alert(
         'Registration failed',
