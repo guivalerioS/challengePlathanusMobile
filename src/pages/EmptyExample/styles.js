@@ -3,15 +3,15 @@ import styled from 'styled-components/native';
 import Button from '~/components/Button';
 
 
-export const Container = styled.KeyboardAvoidingView.attrs({
-  enabled: Platform.OS === 'ios',
-  behavior: 'padding',
+export const Container = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 25,
+    marginTop: 5
+  },
 })`
-  justify-content: center;
-  align-items: center;
-  padding: 25px;
-  margin-top:5%;
-
+  flex: 1;
 `;
 
 export const Title = styled.Text`

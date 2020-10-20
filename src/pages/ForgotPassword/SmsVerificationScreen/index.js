@@ -25,7 +25,7 @@ import {
 } from './styles';
 
 
-export default function SmsVerificationScreen({ navigation }) {
+export default function SmsVerificationForgotScreen({ navigation }) {
   const dispatch = useDispatch();
   const firstInputRef = useRef();
   const secondInputRef = useRef();
@@ -82,7 +82,7 @@ export default function SmsVerificationScreen({ navigation }) {
         setIsLoading(false)
       });
         console.log(response);
-        navigation.navigate('FinishScreen', {
+        navigation.navigate('UpdateForgotScreen', {
           phonenumber,
         })
     }catch (error) {

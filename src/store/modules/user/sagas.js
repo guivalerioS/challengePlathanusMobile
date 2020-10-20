@@ -6,32 +6,28 @@ import {
   updateProfileSuccess,
 } from './actions';
 
-export function* updateProfile({ payload }) {
+export function* updateProfile({ payload, navigation }) {
   try {
-    const { name, email, profileid, ...rest } = payload.data;
+    const { passwordCheck, password, email, telephone_number } = payload.data;
+    yield call(api.put, 'users', {
+      telephone_number,
+      email,
+      password,
+      confirmPassword: passwordCheck,
+    });
 
-    const profile = Object.assign(
-      { name, email },
-      rest.oldPassword ? rest : {}
-    );
+    Alert.alert('Success!', 'Password successfully changed');
+    navigation.navigate('SignIn');
 
-    const response = yield call(api.put, `users/${profileid}`, profile);
-
-    Alert.alert('Sucesso!', 'Perfil atualizado com sucesso');
-
-    yield put(updateProfileSuccess(response.data));
   } catch (err) {
-    if (err.response.data.error === 'Password does not match') {
-      Alert.alert('Falha na atualização', 'Senha Incorreta');
-    } else if (err.response.data.error === 'Email already exists.') {
-      Alert.alert('Falha no cadastro', 'Email ja utilizado');
+ if (err.response.data.error === 'Account not exist.') {
+      Alert.alert( 'Update failed', 'Account not exist.');
     } else if (err.response.data.error === 'Validation fails') {
-      Alert.alert('Falha na atualização', 'Confirmação de senha incorreta');
-    } else {
-      Alert.alert('Falha na atualização', 'Entre em Contato com o Suporte');
+      Alert.alert(
+        'Update failed',
+        'Password must be at least 6 characters'
+      );
     }
-
-    yield put(updateProfileFailure());
   }
 }
 

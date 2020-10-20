@@ -17,6 +17,9 @@ import SignIn from './pages/SignIn';
 import ExampleScreen from './pages/EmptyExample';
 import PhoneNumberScreen from './pages/SignUp/PhoneNumberScreen';
 import SmsVerificationScreen from './pages/SignUp/SmsVerificationScreen';
+import PhoneNumberForgotScreen from './pages/ForgotPassword/PhoneNumberScreen';
+import SmsVerificationForgotScreen from './pages/ForgotPassword/SmsVerificationScreen';
+import UpdateForgotScreen from './pages/ForgotPassword/UpdateForgotScreen';
 import FinishScreen from './pages/SignUp/FinishScreen';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -32,6 +35,25 @@ export default (isSigned = false) =>
                 PhoneNumberScreen,
                 SmsVerificationScreen,
                 FinishScreen,
+
+              },
+              {
+                defaultNavigationOptions: {
+                  headerTransparent: true,
+                  headerTintColor: '#15162c',
+                  headerLeftContainerStyle: {
+                    marginLeft: 20,
+                  },
+                },
+              }
+            ),
+          },
+          ForgotPasswordFlow : {
+            screen: createStackNavigator(
+              {
+                PhoneNumberForgotScreen,
+                SmsVerificationForgotScreen,
+                UpdateForgotScreen,
 
               },
               {

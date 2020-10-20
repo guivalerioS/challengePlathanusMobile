@@ -3,15 +3,26 @@ import styled from 'styled-components/native';
 import Input from '~/components/Input';
 import Button from '~/components/Button';
 
-export const Container = styled.KeyboardAvoidingView.attrs({
-  enabled: Platform.OS === 'ios',
-  behavior: 'padding',
-})`
-  justify-content: center;
-  align-items: center;
-  padding: 25px;
-  margin-top:5%;
+// export const Container = styled.KeyboardAvoidingView.attrs({
+//   enabled: Platform.OS === 'ios',
+//   behavior: 'padding',
+// })`
+//   justify-content: center;
+//   align-items: center;
+//   padding: 25px;
+//   margin-top:1%;
 
+// `;
+
+export const Container = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 25,
+    marginTop: 1
+  },
+})`
+  flex: 1;
 `;
 
 export const ContainerTitle = styled.KeyboardAvoidingView.attrs({
@@ -37,7 +48,7 @@ export const TitleAccount = styled.Text`
   font-size: 20px;
   color: #15162c;
   font-weight: bold;
-  margin-top: 40%;
+  margin-top: 30%;
 `;
 
 export const TitleInto = styled.Text`

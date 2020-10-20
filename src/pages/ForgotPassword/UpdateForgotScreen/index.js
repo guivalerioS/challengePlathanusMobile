@@ -2,8 +2,9 @@ import React, { useRef, useState } from 'react';
 import { Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { signUpRequest } from '~/store/modules/auth/actions';
+import { updateProfileRequest } from '~/store/modules/user/actions';
 import Snackbar from 'react-native-snackbar';
+import api from '~/services/api';
 
 import {
   Container,
@@ -14,31 +15,70 @@ import {
   Title,
   TitleInto,
   Number,
-  SubTitle,
-  TitleAccount,
   NumberContainer,
 } from './styles';
 
 
-export default function FinishScreen({ navigation }) {
+export default function UpdateForgotScreen({ navigation }) {
   const dispatch = useDispatch();
 
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordCheckRef = useRef();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
 
-
-  const loading = useSelector(state => state.auth.loading);
   const telephone_number = navigation.getParam('phonenumber');
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (password === passwordCheck) {
-      dispatch(signUpRequest(name, email, password,telephone_number.replace(" ", "").trim(), navigation));
+
+      try {
+        setIsLoading(true)
+        const response =  await api.put('users', {
+          telephone_number: telephone_number.replace(" ", "").trim(),
+          email,
+          password,
+          confirmPassword: passwordCheck,
+ 
+        }).then(response => {
+          setIsLoading(false)
+        });
+          //console.log(response);
+          navigation.navigate('SignIn');
+
+      }catch (err) {
+        if (err.response.data.error === 'Account not exist.') {
+          Alert.alert( 'Update failed', 'Account not exist.');
+        } else if (err.response.data.error === 'Validation fails') {
+          Alert.alert(
+            'Update failed',
+            'Password must be at least 6 characters'
+          );
+        }else{
+          Snackbar.show({
+            text: 'Something went wrong.',
+            duration: Snackbar.LENGTH_LONG,
+          });
+        }
+
+        setIsLoading(false)
+        //console.log(error);
+
+        } 
+
+      // dispatch(
+      //   updateProfileRequest({
+      //     email,
+      //     password,
+      //     passwordCheck,
+      //     telephone_number: telephone_number.replace(" ", "").trim(),
+      //   })
+      // );
     } else {
       Snackbar.show({
         text: 'Senhas não conferem',
@@ -53,7 +93,7 @@ export default function FinishScreen({ navigation }) {
 
     <>
 <ContainerTitle>
-    <Title>Complete Registration</Title>
+    <Title>Change Password</Title>
 
 
  
@@ -61,23 +101,8 @@ export default function FinishScreen({ navigation }) {
 </ContainerTitle>
       <Container>
 
-      <SubmitButton onPress={() => Alert.alert('Hey', 'This functionality will be implemented in the future')}
- >
-      Complete using facebook
-          </SubmitButton>
-          
+         
         <Form>
-        <TitleInto>Full name</TitleInto>
-
-        <FormInput
-            icon="person-outline"
-            placeholder="Full name"
-            ref={emailRef}
-            returnKeyType="send"
-            onSubmitEditing={() => emailRef.current.focus()}
-            value={name}
-            onChangeText={setName}
-          />
 
         <TitleInto>E-mail</TitleInto>
 
@@ -121,11 +146,8 @@ export default function FinishScreen({ navigation }) {
          </NumberContainer>
         </Form>
 
-
-        <SubTitle>By clicking Sign up you agree to our T&C</SubTitle>
-
-          <SubmitButton loading={loading} onPress={() => handleSubmit()}>
-           Sign up
+          <SubmitButton loading={isLoading} onPress={() => handleSubmit()}>
+           Change Password
           </SubmitButton>
       </Container>
       </>
