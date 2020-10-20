@@ -1,25 +1,52 @@
-Backend:
-Rode yarn para instalar as dependências;
+<h1 align="center">
+    <img alt="Plathanus" title="#Plathanus" src="https://plathanus.com.br/img/website/logo.png" />
+</h1>
 
-Crie um banco de dados no postgres com o nome que desejar .env;
+<h4 align="center">
+	🚀 Desafio React Native plathanus(Mobile)
+</h4>
 
-Renomeie o arquivo .env.example para .env;
+<p align="center">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/guivalerioS/challengePlathanusMobile?color=%2304D361">
 
-Coloque as suas credenciais dentro do .env;
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/guivalerioS/challengePlathanusMobile">
 
-Rode yarn sequelize db:migrate para executar as migrations;
+</p>
 
-Rode yarn dev para iniciar o servidor.
+## 🛠 Tecnologias
 
-comandos docker:
-para o postgres(BD princical) : docker run --name database -e POSTGRES_PASSWORD=password_example -p 5432:5432 -d postgres
+Principais ferramentas utilizadas na construção do Mobile:
 
-mongo(notificações) : docker run --name mongo -p 21017:27017 -d -t mongo
+- Axios
+- Redux
+- Styled Components
+- React Navigation
 
-redis(fila de email) : docker run --name redis -p 6379:6379 -d -t redis:alpine
 
 
-Frontend:
-Rode yarn para instalar as dependências;
+## 🚀 Como executar o projeto
 
-Windows: yarn react-native run-android;
+### Pré-requisitos
+
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
+
+- Yarn
+
+Agora para iniciarmos o projeto, siga os seguintes passos:
+
+```bash
+# Clone este repositório
+$ git clone https://github.com/guivalerioS/challengePlathanusMobile.git
+
+# Entre na pasta do projeto e instale as dependências
+$ yarn
+
+# Caso você esteja rodando o backend localmente entre na pasta \src\services do projeto e abra o arquivo api.js
+$ baseURL deve ser o IP do seu computador, exemplo : baseURL: 'http://192.168.0.107:3333/',
+
+# e para executar no seu celular android:
+$ yarn react-native run-android
+
+```
+
+Feito com ❤️ por Guilherme Valerio 👋🏽 [Entre em contato!](https://www.linkedin.com/in/guilherme-valerio-399718143/)
