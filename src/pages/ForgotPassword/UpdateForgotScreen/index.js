@@ -16,6 +16,7 @@ import {
   TitleInto,
   Number,
   NumberContainer,
+  SubTitle,
 } from './styles';
 
 
@@ -94,9 +95,7 @@ export default function UpdateForgotScreen({ navigation }) {
     <>
 <ContainerTitle>
     <Title>Change Password</Title>
-
-
- 
+    <SubTitle>The email must match the phone number provided and vice versa, so the password change will be made.</SubTitle>
 
 </ContainerTitle>
       <Container>
@@ -104,7 +103,7 @@ export default function UpdateForgotScreen({ navigation }) {
          
         <Form>
 
-        <TitleInto>E-mail</TitleInto>
+        <TitleInto>Current account email</TitleInto>
 
         <FormInput
             icon="email"
@@ -116,11 +115,11 @@ export default function UpdateForgotScreen({ navigation }) {
             onChangeText={setEmail}
           />
 
-        <TitleInto>Password</TitleInto>
+        <TitleInto>New Password</TitleInto>
           <FormInput
             icon="lock-outline"
             passwordField
-            placeholder="Password"
+            placeholder="New Password"
             ref={passwordRef}
             returnKeyType="send"
             onSubmitEditing={() => passwordCheckRef.current.focus()}
@@ -128,11 +127,11 @@ export default function UpdateForgotScreen({ navigation }) {
             onChangeText={setPassword}
           />
 
-<TitleInto>Password Confirmation</TitleInto>
+<TitleInto>New Password Confirmation</TitleInto>
           <FormInput
             icon="lock-outline"
             passwordField
-            placeholder="Password Confirmation"
+            placeholder="New Password Confirmation"
             ref={passwordCheckRef}
             returnKeyType="send"
             value={passwordCheck}
