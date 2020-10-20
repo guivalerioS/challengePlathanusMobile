@@ -37,6 +37,13 @@ Com as devidas validações feitas pelo backend.
 
 Aonde o email fornecido da conta seja do número de telefone informado e vice versa. Todavia o ideal seria também o envio de um email para confirmação.
 
+
+Um usuário vai logar com:
+- Telefone
+- Senha
+
+Com as devidas validações feitas pelo backend.
+
 ## 🛠 Tecnologias
 
 Principais ferramentas utilizadas na construção do Mobile:
