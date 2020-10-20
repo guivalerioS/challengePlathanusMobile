@@ -13,6 +13,30 @@
 
 </p>
 
+## 💻 Sobre o projeto
+
+Este projeto é um aplicativo mobile de cadastro/recuperação/autenticação de usuários, com validações PIN através do envio de SMS.
+
+Um usuário se cadastrará com:
+- Telefone
+- Nome
+- Email
+- Senha
+- Confirmação de senha
+
+Com as devidas validações feitas pelo backend.
+
+Um usuário vai recuperar a senha com:
+
+- Telefone
+- Email
+- Senha
+- Confirmação de senha
+
+Com as devidas validações feitas pelo backend.
+
+Aonde o email fornecido da conta seja do número de telefone informado e vice versa. Todavia o ideal seria também o envio de um email para confirmação.
+
 ## 🛠 Tecnologias
 
 Principais ferramentas utilizadas na construção do Mobile:
