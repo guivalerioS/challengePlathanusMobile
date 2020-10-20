@@ -29,7 +29,7 @@ export function* signIn({ payload }) {
 
 export function* signUp({ payload, navigation }) {
   try {
-    const { name, email, password, telephone_number } = payload.data;
+    const { name, email, password, telephone_number } = payload;
 
     yield call(api.post, 'users', {
       name,
